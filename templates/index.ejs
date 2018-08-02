@@ -7,5 +7,26 @@
 </head>
 <body>
 	<h1>Hello My Dear Friend</h1>
+	<hr />
+	<% if( !submit ){ %>
+	<form method="post" action="/process">
+		<label>Name</label>
+		<br />
+		<input type="text" name="name" />
+		<br />
+		<label>Surname</label>
+		<br />
+		<input type="text" name="surname" />
+		<br />
+		<button name="submit" value="submited">Submit this</button>
+	</form>
+	<% } else{ %>
+		
+		<ul>
+			<li>Ime: <%= name; %></li>
+			<li>Prezime: <%= surname; %></li>
+		</ul>
+
+	<% } %>
 </body>
 </html>

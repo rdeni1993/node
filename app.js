@@ -8,10 +8,22 @@ var app = expressModule();
 app.set("views", pathModule.join(__dirname, "templates/"));
 app.set("view engine", "ejs");
 // MiddleWare
+app.use(bodyParserModule());
 // Set Routes
 app.get("/", function (requestObject, responseObject) {
     responseObject.status(200); // Return OKay
-    responseObject.render("index");
+    responseObject.render("index", { submit: false });
+});
+app.post("/process", function (requestObject, responseObject) {
+    var myName = requestObject.body.name;
+    var mySurname = requestObject.body.surname;
+    var submit = requestObject.body.submit;
+    responseObject.status(200);
+    responseObject.render("index", {
+        name: myName,
+        surname: mySurname,
+        submit: submit
+    });
 });
 // Start app
 console.log("\n\nApplication is running on port 8080");
