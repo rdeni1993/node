@@ -8,5 +8,10 @@
   },
   "devDependencies": {
     "@types/node": "^6.0.87"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
   }
 }
