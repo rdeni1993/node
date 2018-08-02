@@ -12,6 +12,7 @@ app.set("view engine", "ejs");
 
 // MiddleWare
 app.use(bodyParserModule());
+app.use(expressModule.static(pathModule.join( __dirname, "assets/" )));
 
 // Set Routes
 app.get("/", function ( requestObject, responseObject ) {
