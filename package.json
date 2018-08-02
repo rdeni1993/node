@@ -1,0 +1,12 @@
+{
+  "name": "register",
+  "version": "0.0.0",
+  "description": "register",
+  "main": "app.js",
+  "author": {
+    "name": "Denis Ristic"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.87"
+  }
+}
