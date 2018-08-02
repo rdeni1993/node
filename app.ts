@@ -23,15 +23,17 @@ app.get("/", function ( requestObject, responseObject ) {
 
 app.post("/process", function (requestObject, responseObject) {
 
-    var myName = requestObject.body.name;
+    var myName    = requestObject.body.name;
     var mySurname = requestObject.body.surname;
-    var submit = requestObject.body.submit;
+    var submit    = requestObject.body.submit;
+    var age       = requestObject.body.age;
 
     responseObject.status(200);
     responseObject.render("index", {
 
         name: myName,
         surname: mySurname,
+        age: age,
         submit: submit
 
     });
