@@ -1,7 +1,8 @@
 ﻿// NPM installed modules
 const expressModule     = require("express");
 const bodyParserModule  = require("body-parser");
-const pathModule        = require("path");
+const pathModule = require("path");
+const fileUpload = require("express-fileupload");
 
 // Instant APP
 const app = expressModule();
@@ -11,8 +12,9 @@ app.set("views", pathModule.join( __dirname, "templates/" ));
 app.set("view engine", "ejs");
 
 // MiddleWare
-app.use(bodyParserModule());
-app.use(expressModule.static(pathModule.join( __dirname, "assets/" )));
+app.use(bodyParserModule.urlencoded({extended: true}));
+app.use(expressModule.static(pathModule.join(__dirname, "assets/")));
+app.use(fileUpload());
 
 // Set Routes
 app.get("/", function ( requestObject, responseObject ) {
@@ -24,18 +26,26 @@ app.get("/", function ( requestObject, responseObject ) {
 
 app.post("/process", function (requestObject, responseObject) {
 
-    var myName    = requestObject.body.name;
-    var mySurname = requestObject.body.surname;
-    var submit    = requestObject.body.submit;
-    var age       = requestObject.body.age;
+    requestObject.files.myfile.mv(pathModule.join(__dirname, "uploads/" + requestObject.files.myfile.name), function (err) {
 
-    responseObject.status(200);
-    responseObject.render("index", {
+        if (!err) {
 
-        name: myName,
-        surname: mySurname,
-        age: age,
-        submit: submit
+            console.log("Files Uploaded");
+
+        } else {
+
+            console.log(err);
+
+        }
+
+        responseObject.render("index", {
+
+            name: requestObject.body.name,
+            surname: requestObject.body.surname,
+            age: requestObject.body.age,
+            submit: requestObject.body.submit
+
+        });
 
     });
 

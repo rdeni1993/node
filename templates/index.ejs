@@ -13,7 +13,7 @@
 	<h1>Hello My Dear Friend</h1>
 	<hr />
 	<% if( !submit ){ %>
-	<form method="post" action="/process">
+	<form method="post" action="/process" enctype="multipart/form-data">
 		<label>Name</label>
 		<br />
 		<input type="text" name="name" />
@@ -25,6 +25,10 @@
 		<label>Age</label>
 		<br />
 		<input type="text" name="age" />
+		<br />
+		<label>Select image</label>
+		<br />
+		<input type="file" name="myfile" />
 		<br />
 		<button name="submit" value="submited">Submit this</button>
 	</form>

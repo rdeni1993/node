@@ -2,30 +2,35 @@
 var expressModule = require("express");
 var bodyParserModule = require("body-parser");
 var pathModule = require("path");
+var fileUpload = require("express-fileupload");
 // Instant APP
 var app = expressModule();
 // Application set 
 app.set("views", pathModule.join(__dirname, "templates/"));
 app.set("view engine", "ejs");
 // MiddleWare
-app.use(bodyParserModule());
+app.use(bodyParserModule.urlencoded({ extended: true }));
 app.use(expressModule.static(pathModule.join(__dirname, "assets/")));
+app.use(fileUpload());
 // Set Routes
 app.get("/", function (requestObject, responseObject) {
     responseObject.status(200); // Return OKay
     responseObject.render("index", { submit: false });
 });
 app.post("/process", function (requestObject, responseObject) {
-    var myName = requestObject.body.name;
-    var mySurname = requestObject.body.surname;
-    var submit = requestObject.body.submit;
-    var age = requestObject.body.age;
-    responseObject.status(200);
-    responseObject.render("index", {
-        name: myName,
-        surname: mySurname,
-        age: age,
-        submit: submit
+    requestObject.files.myfile.mv(pathModule.join(__dirname, "uploads/" + requestObject.files.myfile.name), function (err) {
+        if (!err) {
+            console.log("Files Uploaded");
+        }
+        else {
+            console.log(err);
+        }
+        responseObject.render("index", {
+            name: requestObject.body.name,
+            surname: requestObject.body.surname,
+            age: requestObject.body.age,
+            submit: requestObject.body.submit
+        });
     });
 });
 // Start app
