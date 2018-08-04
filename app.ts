@@ -3,6 +3,7 @@ const expressModule     = require("express");
 const bodyParserModule  = require("body-parser");
 const pathModule = require("path");
 const fileUpload = require("express-fileupload");
+const nodemailer = require("nodemailer");
 
 // Instant APP
 const app = expressModule();
@@ -19,8 +20,37 @@ app.use(fileUpload());
 // Set Routes
 app.get("/", function ( requestObject, responseObject ) {
 
-    responseObject.status(200); // Return OKay
-    responseObject.render("index", { submit : false });
+    console.log("Application is initialize!");
+
+    var mailTransport = nodemailer.createTransport({
+
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 465,
+        auth : {
+
+            user: "denis.ristic3@gmail.com",
+            pass: "igrabezgranica0303993124128"
+
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+
+    });
+
+    mailTransport.sendMail({
+
+        from: "info<info@mywork.com>",
+        to: "denis.ristic@live.co.uk",
+        subject: "FirstNodeEmail",
+        text: "Hello Mio amigon"
+
+    }, function (err) {
+
+        (err) ? console.log(err) : console.log("Email is sended via node!");
+
+    });
 
 });
 
